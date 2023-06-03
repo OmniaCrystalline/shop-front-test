@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+img {
+    width: 100%;
+    object-position: 50% 50%;
+}
+
+.image-container {
+    height: 250px;
+    overflow: hidden;
+}
+
