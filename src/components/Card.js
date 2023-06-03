@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { sendOrder } from "../redux/operations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import Loader from "./Loader";
 
 const schema = yup
   .object({
@@ -24,7 +25,7 @@ const Card = () => {
   const dispatch = useDispatch();
   const madeOrder = useSelector(user);
   const inBasket = useSelector(basket);
-  const pending = useSelector(isLoading)
+  const pending = useSelector(isLoading);
   const {
     register,
     handleSubmit,
@@ -34,7 +35,6 @@ const Card = () => {
   const onSubmit = (data) => {
     dispatch(addUserData(data));
     reset();
-    console.log(data);
   };
 
   const sum = inBasket.reduce((acc, curr) => {
@@ -46,43 +46,40 @@ const Card = () => {
     dispatch(sendOrder(madeOrder));
   }, [dispatch, madeOrder]);
 
-  console.log("inBasket", inBasket);
-
   return (
-    <div className='container grid grid-cols-2 h-screen m-auto'>
-      
+    <div className='container grid md:grid-cols-2 md:h-screen m-auto'>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-col gap-4 bg-red-200 p-5 text-lg'>
-        {pending && <p>Loading...</p>}
+        className='flex flex-col md:gap-4 bg-red-200 p-3 md:p-5 text-lg'>
         Name
         <input
           {...register("name", { required: true })}
-          className='p-2 rounded'
+          className='md:p-2 rounded'
         />
         {errors.name?.message}
         Email
         <input
           {...register("email", { required: true })}
-          className='p-2 rounded'
+          className='md:p-2 rounded'
         />
         {errors.email?.message}
         Phone
         <input
           {...register("phone", { required: true })}
-          className='p-2 rounded'
+          className='md:p-2 rounded'
         />
         {errors.phone?.message}
         Adress
         <input
           {...register("adress", { required: true })}
-          className='p-2 rounded'
+          className='md:p-2 rounded'
         />
         {errors.adress?.message}
-        <input type='submit' className='p-2 bg-sky-200 rounded mt-5' />
+        <input type='submit' className='md:p-2 bg-sky-200 rounded mt-5' />
       </form>
 
-      <div className='container p-3 bg-green-200 h-screen overflow-scroll'>
+      <div className='container grid p-3 bg-green-200 h-screen md:text-xl md:h-auto md:gap-2 overflow-scroll'>
+        {pending && <Loader />}
         {inBasket.length === 0 && <p>emply basket</p>}
         {inBasket.length > 0 &&
           inBasket.map((e) => <ProductItem key={e._id} e={e} />)}

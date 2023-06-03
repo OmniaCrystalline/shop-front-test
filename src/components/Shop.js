@@ -6,6 +6,7 @@ import { getAllProducts, getOneTypeProduct } from "../redux/operations";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoading, products } from "../redux/selectors";
 import { addToCard } from "../redux/slice";
+import Loader from "./Loader";
 
 const shops = ["Pizza", "Sushi", "Vegan", "Burger"];
 
@@ -22,16 +23,16 @@ const Shop = () => {
 
   return (
     <>
-      <div className='container grid grid-cols-6 m-auto p-3 '>
-        <ul className='container gap-4 flex flex-col bg-emerald-200 col-span-2 p-3'>
+      <div className='container flex flex-col md:grid md:grid-cols-6 m-auto md:p-3'>
+        <ul className='container gap-0 md:gap-4 flex justify-evenly md:flex-col md:justify-start p-2 md:bg-emerald-200 md:col-span-2 md:p-3'>
           {shops.map((e) => (
-            <li key={e} className=' bg-emerland-200 flex'>
+            <li key={e} className='bg-emerland-200 flex'>
               <button
                 type='button'
                 className={
                   currentshop === e
-                    ? "w-full h-full p-5 bg-emerald-500 text-white"
-                    : "w-full h-full p-5 bg-emerald-300"
+                    ? "w-full h-full px-2 md:p-5 bg-emerald-500 text-white rounded "
+                    : "w-full h-full px-2 md:p-5 bg-emerald-300 rounded"
                 }
                 onClick={() => {
                   dispatch(getOneTypeProduct(e));
@@ -42,15 +43,15 @@ const Shop = () => {
             </li>
           ))}
         </ul>
-        <div className='container col-span-4 h-screen p-3 overflow-scroll'>
-          {loading && <div>loading...</div>}
-          <div className='grid gap-3 grid-cols-2'>
+        <div className='container md:col-span-4 h-screen p-3 overflow-scroll'>
+          {loading && <Loader/>}
+          <div className='grid gap-3 md:grid-cols-2 lg:grid-cols-3'>
             {data &&
               data.length > 0 &&
               data.map((e) => (
                 <div key={e._id} className='p-3 grid shadow-lg'>
                   <h3 className='text-2xl'>{e.title}</h3>
-                  <div className='container image-container'>
+                  <div className='container md:h-36 md:overflow-hidden'>
                     <img
                       src={`/images/${e.seller.toLowerCase() + "s"}/${
                         e.img
@@ -62,6 +63,7 @@ const Shop = () => {
 
                   <p>{e.weight}</p>
                   <p>{e.price} $</p>
+                  <p>recipe: {e.recipe}</p>
                   <button
                     type='button'
                     className='bg-slate-100 rounded p-2'

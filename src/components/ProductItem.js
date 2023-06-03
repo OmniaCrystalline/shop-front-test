@@ -8,7 +8,7 @@ export const ProductItem = ({ e }) => {
   const { _id, title, img, quantity, weight, price, seller } = e;
   const dispatch = useDispatch();
   return (
-    <div className='grid gap-3'>
+    <div className='grid gap-3 bg-slate-100'>
       <div key={_id} className='p-3 grid shadow-lg'>
         <h3 className='text-2xl'>{e.title}</h3>
         <div className='container image-container'>
