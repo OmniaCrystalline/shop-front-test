@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+окремі запити по магазинам
+додавання в корзину з редагуванням
+відправка замовлення 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
