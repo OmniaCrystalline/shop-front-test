@@ -21,8 +21,7 @@ const Shop = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <div className='container flex flex-col md:grid md:grid-cols-6 m-auto '>
+      <div className='container flex flex-col md:grid md:grid-cols-6 m-auto pt-20'>
         <ul className='container gap-0 md:gap-4 flex justify-evenly md:flex-col md:justify-start p-2 md:bg-emerald-200 md:col-span-2 md:p-3'>
           {shops.map((e) => (
             <li key={e} className='bg-emerland-200 flex'>
@@ -74,7 +73,6 @@ const Shop = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

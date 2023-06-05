@@ -1,12 +1,10 @@
-import React from 'react'
-import History from '../components/History'
+/** @format */
+
+import React from "react";
+import History from "../components/History";
 
 const HistoryPage = () => {
-  return (
-    <div>
-      <History/>
-    </div>
-  )
-}
+  return <History />;
+};
 
-export default HistoryPage
+export default HistoryPage;

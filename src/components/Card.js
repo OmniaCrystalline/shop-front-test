@@ -54,7 +54,7 @@ const Card = () => {
   //dispatch(addAll(data))
 
   return (
-    <div className='container grid md:grid-cols-2 md:h-screen gap-1 m-auto'>
+    <div className='container grid md:grid-cols-2 md:h-screen gap-1 pt-20 m-auto'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col md:gap-4 bg-red-200 p-3 md:p-5 text-lg'>
