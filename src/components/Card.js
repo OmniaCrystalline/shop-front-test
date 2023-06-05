@@ -7,10 +7,14 @@ import ProductItem from "./ProductItem";
 import { useForm } from "react-hook-form";
 import { addUserData } from "../redux/slice";
 import { useEffect } from "react";
-import { sendOrder } from "../redux/operations";
+import {
+  sendOrder,
+  //addAll
+} from "../redux/operations";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Loader from "./Loader";
+//import { data } from "../redux/data";
 
 const schema = yup
   .object({
@@ -32,6 +36,7 @@ const Card = () => {
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
+
   const onSubmit = (data) => {
     dispatch(addUserData(data));
     reset();
@@ -42,12 +47,14 @@ const Card = () => {
   }, 0);
 
   useEffect(() => {
-    if (madeOrder.order.length === 0) return;
+    if (madeOrder && madeOrder?.order?.length === 0) return;
     dispatch(sendOrder(madeOrder));
   }, [dispatch, madeOrder]);
 
+  //dispatch(addAll(data))
+
   return (
-    <div className='container grid md:grid-cols-2 md:h-screen m-auto'>
+    <div className='container grid md:grid-cols-2 md:h-screen gap-1 m-auto'>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className='flex flex-col md:gap-4 bg-red-200 p-3 md:p-5 text-lg'>
@@ -78,12 +85,19 @@ const Card = () => {
         <input type='submit' className='md:p-2 bg-sky-200 rounded mt-5' />
       </form>
 
-      <div className='container grid p-3 bg-green-200 h-screen md:text-xl md:h-auto md:gap-2 overflow-scroll'>
+      <div
+        className='container 
+        flex flex-col
+      
+       p-3 bg-green-200 gap-3 h-screen md:text-xl md:h-auto md:gap-2 overflow-scroll'>
         {pending && <Loader />}
-        {inBasket.length === 0 && <p>emply basket</p>}
-        {inBasket.length > 0 &&
+        {inBasket && inBasket.length === 0 && (
+          <p className=' text-center text-xxl'>emply basket</p>
+        )}
+        {inBasket &&
+          inBasket.length > 0 &&
           inBasket.map((e) => <ProductItem key={e._id} e={e} />)}
-        <p className='p-3 text-lg'>sum: {sum}$</p>
+        <p className='p-3 text-center text-xxl'>sum: {sum}$</p>
       </div>
     </div>
   );

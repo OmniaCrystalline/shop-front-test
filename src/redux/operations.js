@@ -15,6 +15,19 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
+export const getOrdersOfUser = createAsyncThunk(
+  "orders/get",
+  async (data, thunkAPI) => {
+    try {
+      const res = await axios.post("/ordersOfUser", data);
+      console.log('res.data', res.data)
+      return res.data.info;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const getOneTypeProduct = createAsyncThunk(
   "onetype/get",
   async (shop, thunkAPI) => {
@@ -30,12 +43,20 @@ export const getOneTypeProduct = createAsyncThunk(
 export const sendOrder = createAsyncThunk(
   "order/post",
   async (order, thunkAPI) => {
-    console.log('order', order)
     try {
-      const res = await axios.post('/', order);
+      const res = await axios.post("/", order);
       return res.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
+
+export const addAll = createAsyncThunk("all/post", async (data, thunkAPI) => {
+  try {
+    const res = await axios.post("/addmenu", data);
+    return res.data.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

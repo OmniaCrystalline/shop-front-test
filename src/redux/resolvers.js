@@ -14,8 +14,7 @@ export const handleRejected = (state, action) => {
 };
 
 export const handleResolveOrder = (state, action) => {
-  state.isLoading = false
-  console.log('resolveOredr')
+  state.isLoading = false;
   state.user = {
     name: "",
     phone: "",
@@ -23,6 +22,11 @@ export const handleResolveOrder = (state, action) => {
     adress: "",
     date: null,
     order: [],
-  }
-  state.basket = []
+  };
+  state.basket = [];
+};
+
+export const handleResolveHistory = (state, action) => {
+  state.isLoading = false;
+  state.history = action.payload
 };

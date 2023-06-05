@@ -5,12 +5,14 @@ import {
   getAllProducts,
   getOneTypeProduct,
   sendOrder,
+  getOrdersOfUser,
 } from "../redux/operations";
 import {
   handleResolveProducts,
   handlePending,
   handleRejected,
   handleResolveOrder,
+  handleResolveHistory,
 } from "../redux/resolvers";
 
 const initialState = {
@@ -25,6 +27,7 @@ const initialState = {
   },
   isLoading: false,
   products: [],
+  history: [],
 };
 
 export const dataSlice = createSlice({
@@ -39,18 +42,14 @@ export const dataSlice = createSlice({
       state.basket.push(data);
     },
     removeFromCard(state, action) {
-      //_id
       state.basket = state.basket.filter((e) => e._id !== action.payload);
     },
     changeQuantity(state, action) {
-      console.log("changeQuantity.payload", action.payload);
-      //[_id, quantity]
       const index = state.basket.findIndex((e) => e._id === action.payload[0]);
-      console.log("index", index);
       state.basket[index].quantity = Number(action.payload[1]);
     },
     addUserData(state, action) {
-      const data = {...action.payload}
+      const data = { ...action.payload };
       data.date = new Date();
       data.order = state.basket;
       state.user = data;
@@ -66,7 +65,10 @@ export const dataSlice = createSlice({
       .addCase(getOneTypeProduct.fulfilled, handleResolveProducts)
       .addCase(sendOrder.pending, handlePending)
       .addCase(sendOrder.rejected, handleRejected)
-      .addCase(sendOrder.fulfilled, handleResolveOrder);
+      .addCase(sendOrder.fulfilled, handleResolveOrder)
+      .addCase(getOrdersOfUser.pending, handlePending)
+      .addCase(getOrdersOfUser.rejected, handleRejected)
+      .addCase(getOrdersOfUser.fulfilled, handleResolveHistory);
   },
 });
 
