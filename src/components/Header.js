@@ -10,6 +10,7 @@ const Header = () => {
         <nav className='container gap-4 flex m-auto p-5 '>
           <NavLink to='/'>shop</NavLink>
           <NavLink to='/card'>card</NavLink>
+          <NavLink to='/history'>history</NavLink>
         </nav>
       </div>
     </div>

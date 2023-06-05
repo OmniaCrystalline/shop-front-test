@@ -15,7 +15,6 @@ const Shop = () => {
   const dispatch = useDispatch();
   const data = useSelector(products);
   const loading = useSelector(isLoading);
-  console.log("currentshop", currentshop);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -23,7 +22,7 @@ const Shop = () => {
 
   return (
     <>
-      <div className='container flex flex-col md:grid md:grid-cols-6 m-auto md:p-3'>
+      <div className='container flex flex-col md:grid md:grid-cols-6 m-auto '>
         <ul className='container gap-0 md:gap-4 flex justify-evenly md:flex-col md:justify-start p-2 md:bg-emerald-200 md:col-span-2 md:p-3'>
           {shops.map((e) => (
             <li key={e} className='bg-emerland-200 flex'>
