@@ -24,9 +24,10 @@ export const handleResolveOrder = (state, action) => {
     order: [],
   };
   state.basket = [];
+  alert("Order have been sent");
 };
 
 export const handleResolveHistory = (state, action) => {
   state.isLoading = false;
-  state.history = action.payload
+  state.history = action.payload;
 };

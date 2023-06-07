@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrdersOfUser } from "../redux/operations";
+import { getOrdersOfUser, sendOrder } from "../redux/operations";
 import { history } from "../redux/selectors";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -76,15 +76,15 @@ const History = () => {
                 <span>price</span>
               </div>
             )}
-            {data?.map(({ date, order }, index) => (
+            {data?.map((data, index) => (
               <div
                 key={index}
-                className='container grid grid-cols-4  bg-fuchsia-200 p-3'>
+                className='container grid grid-cols-4  bg-fuchsia-200 p-3 gap-3'>
                 <p className=' col-span-1'>
-                  {moment(date).format("D-MM-YYYY")}
+                  {moment(data.date).format("D-MM-YYYY")}
                 </p>
                 <div className='container grid col-span-3 gap-3'>
-                  {order.map(({ title, quantity, price }, index) => (
+                  {data.order.map(({ title, quantity, price }, index) => (
                     <div key={index} className='container flex justify-between'>
                       <span>{index + 1}</span>
                       <span>{title}</span>
@@ -93,6 +93,7 @@ const History = () => {
                     </div>
                   ))}
                 </div>
+                <button className=" col-span-6 p-1 bg-fuchsia-100 w-24 rounded" type='button' onClick={() => dispatch(sendOrder(data))}>repeat order</button>
               </div>
             ))}
           </div>

@@ -20,7 +20,7 @@ export const getOrdersOfUser = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await axios.post("/ordersOfUser", data);
-      console.log('res.data', res.data)
+      console.log("res.data", res.data);
       return res.data.info;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -44,7 +44,12 @@ export const sendOrder = createAsyncThunk(
   "order/post",
   async (order, thunkAPI) => {
     try {
-      const res = await axios.post("/", order);
+      const data = { ...order };
+
+      if (order._id) {
+        delete data._id;
+      }
+      const res = await axios.post("/", data);
       return res.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
