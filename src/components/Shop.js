@@ -1,20 +1,20 @@
 /** @format */
 
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getAllProducts, getOneTypeProduct } from "../redux/operations";
 import { useDispatch, useSelector } from "react-redux";
-import { isLoading, products } from "../redux/selectors";
-import { addToCard } from "../redux/slice";
+import { currentShop, isLoading, products } from "../redux/selectors";
+import { addToCard, shopChoice } from "../redux/slice";
 import Loader from "./Loader";
 
 const shops = ["Pizza", "Sushi", "Vegan", "Burger"];
 
 const Shop = () => {
-  const [currentshop, setcurrentshop] = useState("all");
   const dispatch = useDispatch();
   const data = useSelector(products);
   const loading = useSelector(isLoading);
+  const current = useSelector(currentShop);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -28,13 +28,13 @@ const Shop = () => {
             <button
               type='button'
               className={
-                currentshop === e
+                current === e
                   ? "w-full h-full px-2 md:p-5 bg-emerald-500 text-white rounded "
                   : "w-full h-full px-2 md:p-5 bg-emerald-300 rounded"
               }
               onClick={() => {
                 dispatch(getOneTypeProduct(e));
-                setcurrentshop(e);
+                dispatch(shopChoice(e));
               }}>
               {e}
             </button>

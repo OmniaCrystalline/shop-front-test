@@ -37,6 +37,7 @@ const History = () => {
   };
 
   const data = useSelector(history);
+  console.log('data history',typeof data !== "number")
 
   return (
     <div className='container pt-20 m-auto'>
@@ -67,7 +68,7 @@ const History = () => {
             Your orders
           </h3>
           <div className='container grid gap-3'>
-            {data && data.length > 0 && (
+            { typeof data !== "number" && data && data.length > 0 && (
               <div className='container bg-fuchsia-300 p-3 flex justify-between'>
                 <span>date</span>
                 <span>#</span>
@@ -76,7 +77,7 @@ const History = () => {
                 <span>price</span>
               </div>
             )}
-            {data?.map((data, index) => (
+            {typeof data !== "number" && data?.map((data, index) => (
               <div
                 key={index}
                 className='container grid grid-cols-4  bg-fuchsia-200 p-3 gap-3'>
@@ -84,7 +85,7 @@ const History = () => {
                   {moment(data.date).format("D-MM-YYYY")}
                 </p>
                 <div className='container grid col-span-3 gap-3'>
-                  {data.order.map(({ title, quantity, price }, index) => (
+                  {typeof data !== "number" && data?.order.map(({ title, quantity, price }, index) => (
                     <div key={index} className='container flex justify-between'>
                       <span>{index + 1}</span>
                       <span>{title}</span>

@@ -28,12 +28,16 @@ const initialState = {
   isLoading: false,
   products: [],
   history: [],
+  current: "all",
 };
 
 export const dataSlice = createSlice({
   name: "shop",
   initialState,
   reducers: {
+    shopChoice(state, action) {
+      state.current = action.payload;
+    },
     addToCard(state, action) {
       if (state.basket.filter((e) => e._id === action.payload._id).length !== 0)
         return;
@@ -51,7 +55,8 @@ export const dataSlice = createSlice({
     addUserData(state, action) {
       const data = { ...action.payload };
       data.date = new Date();
-      data.order = state.basket;
+      data.order = state.basket.filter(e => e.seller === state.current)
+      console.log('data.order', data.order)
       state.user = data;
     },
   },
@@ -78,6 +83,7 @@ export const {
   removeFromCard,
   changeQuantity,
   addUserData,
+  shopChoice,
 } = dataSlice.actions;
 
 export const dataReducer = dataSlice.reducer;

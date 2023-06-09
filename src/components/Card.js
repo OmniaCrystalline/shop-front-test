@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { basket, isLoading, user } from "../redux/selectors";
+import { basket, currentShop, isLoading, user } from "../redux/selectors";
 import ProductItem from "./ProductItem";
 import { useForm } from "react-hook-form";
 import { addUserData } from "../redux/slice";
@@ -30,6 +30,8 @@ const Card = () => {
   const madeOrder = useSelector(user);
   const inBasket = useSelector(basket);
   const pending = useSelector(isLoading);
+  const current = useSelector(currentShop);
+
   const {
     register,
     handleSubmit,
@@ -37,12 +39,18 @@ const Card = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  let list = [];
+
+  current === "all"
+    ? (list = [])
+    : (list = inBasket.filter((e) => e.seller === current));
+  
   const onSubmit = (data) => {
     dispatch(addUserData(data));
     reset();
   };
 
-  const sum = inBasket.reduce((acc, curr) => {
+  const sum = list.reduce((acc, curr) => {
     return (acc += curr.price * curr.quantity);
   }, 0);
 
@@ -51,7 +59,6 @@ const Card = () => {
     dispatch(sendOrder(madeOrder));
   }, [dispatch, madeOrder]);
 
-  //dispatch(addAll(data))
 
   return (
     <div className='container grid md:grid-cols-2 md:h-screen gap-1 pt-20 m-auto h-screen'>
@@ -91,12 +98,13 @@ const Card = () => {
       
        p-3 bg-green-200 gap-3 h-screen md:text-xl md:h-auto md:gap-2 overflow-scroll'>
         {pending && <Loader />}
-        {inBasket && inBasket.length === 0 && (
+        {current === "all" ? <div>you should choose one shop</div> : <h2 className="text-2xl text-center text-fuchsia-500">{ current} - shop</h2>}
+        {list && list.length === 0 && (
           <p className=' text-center text-xxl'>emply basket</p>
         )}
-        {inBasket &&
-          inBasket.length > 0 &&
-          inBasket.map((e) => <ProductItem key={e._id} e={e} />)}
+        {list &&
+          list.length > 0 &&
+          list.map((e) => <ProductItem key={e._id} e={e} />)}
         <p className='p-3 text-center text-xxl'>sum: {sum}$</p>
       </div>
     </div>

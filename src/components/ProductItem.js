@@ -6,6 +6,7 @@ import { changeQuantity, removeFromCard } from "../redux/slice";
 
 export const ProductItem = ({ e }) => {
   const { _id, title, img, quantity, weight, price, seller } = e;
+  console.log('e', e)
   const dispatch = useDispatch();
   return (
     <div className='grid gap-3 bg-slate-100'>
