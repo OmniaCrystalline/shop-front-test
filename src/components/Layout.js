@@ -6,10 +6,12 @@ import { Outlet } from "react-router";
 
 const Layout = () => {
   return (
-    <>
+    <div className='overflow-scroll'>
       <Header />
-      <Outlet />
-    </>
+      <div className='body-container max-w-7xl m-auto'>
+        <Outlet />
+      </div>
+    </div>
   );
 };
 

@@ -40,7 +40,7 @@ const History = () => {
   console.log('data history',typeof data !== "number")
 
   return (
-    <div className='container pt-20 m-auto'>
+    <div className='container pt-20 m-auto h-screen'>
       <div className='container pt-20 m-auto md:p-5'>
         <select
           className='md:p-2 rounded mb-3'

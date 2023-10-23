@@ -7,6 +7,12 @@ img {
     object-position: 50% 50%;
 }
 
+body{
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
 
 .loader {
     width: 100%;

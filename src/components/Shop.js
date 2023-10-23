@@ -61,7 +61,7 @@ const Shop = () => {
                 <p>recipe: {e.recipe}</p>
                 <button
                   type='button'
-                  className='bg-slate-100 rounded p-2'
+                  className='bg-slate-100 rounded p-2 hover:bg-slate-200'
                   onClick={() => dispatch(addToCard(e))}>
                   add to card
                 </button>
