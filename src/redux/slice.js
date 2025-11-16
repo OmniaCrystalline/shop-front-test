@@ -52,10 +52,45 @@ export const dataSlice = createSlice({
       const index = state.basket.findIndex((e) => e._id === action.payload[0]);
       state.basket[index].quantity = Number(action.payload[1]);
     },
+    applyPromotion(state) {
+      // Знаходимо найдешевший товар, який ще не має акції
+      const eligibleItems = state.basket.filter(item => !item.isPromoApplied);
+      if (eligibleItems.length < 3) return;
+      
+      // Сортуємо за ціною (найдешевший перший)
+      const sortedItems = [...eligibleItems].sort((a, b) => {
+        const priceA = a.originalPrice || a.price;
+        const priceB = b.originalPrice || b.price;
+        return priceA - priceB;
+      });
+      
+      const cheapestItem = sortedItems[0];
+      const index = state.basket.findIndex((e) => e._id === cheapestItem._id);
+      
+      if (index !== -1) {
+        // Зберігаємо оригінальну ціну
+        if (!state.basket[index].originalPrice) {
+          state.basket[index].originalPrice = state.basket[index].price;
+        }
+        // Встановлюємо ціну 0 та позначаємо, що акція застосована
+        state.basket[index].price = 0;
+        state.basket[index].isPromoApplied = true;
+      }
+    },
+    removePromotion(state, action) {
+      // Відміняємо акцію для товару
+      const index = state.basket.findIndex((e) => e._id === action.payload);
+      if (index !== -1 && state.basket[index].isPromoApplied && state.basket[index].originalPrice) {
+        state.basket[index].price = state.basket[index].originalPrice;
+        state.basket[index].isPromoApplied = false;
+        delete state.basket[index].originalPrice;
+      }
+    },
     addUserData(state, action) {
       const data = { ...action.payload };
       data.date = new Date();
-      data.order = state.basket.filter(e => e.seller === state.current)
+      // Відправляємо всі товари з кошика, незалежно від категорії
+      data.order = [...state.basket];
       console.log('data.order', data.order)
       state.user = data;
     },
@@ -82,6 +117,8 @@ export const {
   addToCard,
   removeFromCard,
   changeQuantity,
+  applyPromotion,
+  removePromotion,
   addUserData,
   shopChoice,
 } = dataSlice.actions;

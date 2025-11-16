@@ -2,15 +2,17 @@
 
 import React from "react";
 import Header from "./Header";
+import Footer from "./Footer";
 import { Outlet } from "react-router";
 
 const Layout = () => {
   return (
-    <div className='overflow-scroll'>
+    <div className='min-h-screen flex flex-col'>
       <Header />
-      <div className='body-container max-w-7xl m-auto'>
+      <div className='body-container w-full flex-1'>
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 };
