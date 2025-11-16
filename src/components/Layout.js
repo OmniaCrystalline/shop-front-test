@@ -3,6 +3,7 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import CookieBanner from "./CookieBanner";
 import { Outlet } from "react-router";
 
 const Layout = () => {
@@ -13,6 +14,7 @@ const Layout = () => {
         <Outlet />
       </div>
       <Footer />
+      <CookieBanner />
     </div>
   );
 };
