@@ -2,9 +2,18 @@
 
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { basket } from "../redux/selectors";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const inBasket = useSelector(basket);
+
+  // Підраховуємо загальну кількість товарів (з урахуванням quantity)
+  const totalItems = inBasket.reduce(
+    (acc, item) => acc + (item.quantity || 1),
+    0
+  );
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -51,6 +60,11 @@ const Header = () => {
               }`
             }>
             <span className='relative z-10'>Кошик</span>
+            {totalItems > 0 && (
+              <span className='absolute -top-1 -right-1 bg-yellow-400 text-indigo-900 text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg animate-pulse'>
+                {totalItems > 99 ? "99+" : totalItems}
+              </span>
+            )}
             <span className='absolute inset-0 bg-white opacity-0 hover:opacity-20 rounded-lg transition-opacity duration-300'></span>
           </NavLink>
           <NavLink
@@ -112,13 +126,18 @@ const Header = () => {
               to='/card'
               onClick={closeMenu}
               className={({ isActive }) =>
-                `block px-4 py-3 text-white font-semibold text-lg rounded-lg transition-all duration-300 ${
+                `block px-4 py-3 text-white font-semibold text-lg rounded-lg transition-all duration-300 relative ${
                   isActive
                     ? "bg-yellow-300 text-indigo-900"
                     : "hover:bg-white/20"
                 }`
               }>
-              Кошик
+              <span>Кошик</span>
+              {totalItems > 0 && (
+                <span className='ml-2 bg-yellow-400 text-indigo-900 text-xs font-bold rounded-full px-2 py-1 shadow-lg'>
+                  {totalItems > 99 ? "99+" : totalItems}
+                </span>
+              )}
             </NavLink>
             <NavLink
               to='/history'
