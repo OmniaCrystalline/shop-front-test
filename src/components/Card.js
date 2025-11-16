@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { basket, currentShop, isLoading, user } from "../redux/selectors";
+import { basket, isLoading, user } from "../redux/selectors";
 import ProductItem from "./ProductItem";
 import { useForm } from "react-hook-form";
 import { addUserData, applyPromotion } from "../redux/slice";
@@ -29,7 +29,6 @@ const Card = () => {
   const madeOrder = useSelector(user);
   const inBasket = useSelector(basket);
   const pending = useSelector(isLoading);
-  const current = useSelector(currentShop);
 
   const {
     register,

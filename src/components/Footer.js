@@ -22,27 +22,27 @@ const Footer = () => {
               Ми пропонуємо найкращі страви з різних кухонь світу.
             </p>
             <div className='flex gap-4 mt-4'>
-              <a 
-                href='#' 
+              <button 
+                type='button'
                 className='w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 transform hover:scale-110'
                 aria-label='Facebook'
               >
                 <span className='text-xl'>📘</span>
-              </a>
-              <a 
-                href='#' 
+              </button>
+              <button 
+                type='button'
                 className='w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 transform hover:scale-110'
                 aria-label='Instagram'
               >
                 <span className='text-xl'>📷</span>
-              </a>
-              <a 
-                href='#' 
+              </button>
+              <button 
+                type='button'
                 className='w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 transform hover:scale-110'
                 aria-label='Twitter'
               >
                 <span className='text-xl'>🐦</span>
-              </a>
+              </button>
             </div>
           </div>
           
